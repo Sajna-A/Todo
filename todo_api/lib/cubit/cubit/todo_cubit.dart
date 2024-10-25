@@ -19,10 +19,17 @@ class TodoCubit extends Cubit<TodoState> {
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
-      print(response.body);
+      print(response.body); // Already there to print full JSON response
+
       final res = jsonDecode(response.body);
-      final data = Todo.fromJson(res);
-      emit(ViewData(data: data));
+      final todos =
+          (res['todos'] as List).map((todo) => Todo.fromJson(todo)).toList();
+
+      // Debugging: Print the parsed todos list
+      print(todos); // Check if it's not empty or null
+      emit(ViewData(data: Todoapi(todos: todos)));
+    } else {
+      print("Failed to load todos: ${response.statusCode}");
     }
   }
 }

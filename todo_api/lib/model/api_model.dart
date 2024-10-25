@@ -60,6 +60,10 @@ class Todo {
         userId: json["userId"],
       );
 
+  get length => null;
+
+  String? get title => null;
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "todo": todo,
